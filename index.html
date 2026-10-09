@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>UNESCO Heritage Explorer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+        <div class="nav-container">
+
+            <a href="#" class="logo" onclick="navigate('home'); return false;">
+                <div class="logo-mark">U</div>
+
+                <div class="logo-text">
+                    <strong>UNESCO</strong>
+                    <span>HERITAGE EXPLORER</span>
+                </div>
+            </a>
+
+            <div class="header-search">
+                <span>⌕</span>
+                <input
+                    type="text"
+                    id="headerSearch"
+                    placeholder="Search heritage sites..."
+                >
+            </div>
+
+            <nav class="nav-links">
+                <a href="#" data-page="home" onclick="navigate('home'); return false;">Home</a>
+                <a href="#" data-page="about" onclick="navigate('about'); return false;">About</a>
+                <a href="#" data-page="contact" onclick="navigate('contact'); return false;">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+                    ☾
+                </button>
+
+                <button class="menu-btn" id="menuBtn">
+                    ☰
+                </button>
+            </div>
+
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#" onclick="navigate('home'); closeMobileMenu(); return false;">Home</a>
+            <a href="#" onclick="navigate('about'); closeMobileMenu(); return false;">About</a>
+            <a href="#" onclick="navigate('contact'); closeMobileMenu(); return false;">Contact</a>
+        </div>
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+        <!-- ================= HOME ================= -->
+
+        <section id="homeView" class="page-view active">
+
+            <!-- HERO -->
+
+            <section class="hero">
+
+                <div class="hero-overlay"></div>
+
+                <div class="hero-content">
+
+                    <p class="eyebrow">UNESCO WORLD HERITAGE</p>
+
+                    <h2>
+                        Places that<br>
+                        <span>tell our story.</span>
+                    </h2>
+
+                    <p class="hero-description">
+                        Explore remarkable cultural and natural places
+                        recognized for their outstanding universal value.
+                    </p>
+
+                    <button class="primary-btn" onclick="scrollToExplorer()">
+                        Explore Heritage
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+                <div class="hero-bottom">
+                    <span>DISCOVER</span>
+                    <div class="scroll-line"></div>
+                </div>
+
+            </section>
+
+
+            <!-- ================= POPULAR HERITAGE ================= -->
+
+            <section class="popular-section section">
+
+                <div class="popular-heading">
+
+                    <div>
+                        <span class="eyebrow">MOST VISITED</span>
+
+                        <h2>
+                            Popular <em>heritage places.</em>
+                        </h2>
+                    </div>
+
+                    <div class="popular-controls">
+
+                        <button
+                            class="popular-arrow"
+                            id="popularPrev"
+                            aria-label="Previous popular places"
+                        >
+                            ←
+                        </button>
+
+                        <button
+                            class="popular-arrow"
+                            id="popularNext"
+                            aria-label="Next popular places"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="popular-track"
+                    id="popularTrack"
+                ></div>
+
+            </section>
+
+
+            <!-- ================= EXPLORER ================= -->
+
+            <section id="explorer" class="explorer section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">EXPLORE</span>
+
+                        <h2>
+                            Find a place<br>
+                            <em>worth remembering.</em>
+                        </h2>
+                    </div>
+
+                    <p class="result-text" id="resultText">
+                        60 heritage sites
+                    </p>
+
+                </div>
+
+
+                <!-- FILTERS -->
+
+                <div class="filters">
+
+                    <div class="search-box">
+                        <span>⌕</span>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search by name, country, location..."
+                        >
+                    </div>
+
+                    <select id="categoryFilter">
+                        <option value="all">All categories</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Natural">Natural</option>
+                        <option value="Mixed">Mixed</option>
+                    </select>
+
+                    <select id="countryFilter">
+                        <option value="all">All countries</option>
+                    </select>
+
+                    <button class="reset-btn" id="resetBtn">
+                        Reset
+                    </button>
+
+                </div>
+
+
+                <!-- SITE GRID -->
+
+                <div class="site-grid" id="siteGrid"></div>
+
+
+                <div class="empty-state" id="emptyState">
+
+                    <div>⌕</div>
+
+                    <h3>No heritage sites found</h3>
+
+                    <p>
+                        Try another keyword or reset your filters.
+                    </p>
+
+                    <button
+                        class="secondary-btn"
+                        onclick="resetFilters()"
+                    >
+                        Reset Filter
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= STATS ================= -->
+
+            <section class="stats section">
+
+                <div class="stat">
+                    <strong>1,248+</strong>
+                    <span>WORLD HERITAGE SITES</span>
+                </div>
+
+                <div class="stat">
+                    <strong>170+</strong>
+                    <span>COUNTRIES</span>
+                </div>
+
+                <div class="stat">
+                    <strong>3</strong>
+                    <span>HERITAGE CATEGORIES</span>
+                </div>
+
+                <div class="stat">
+                    <strong>1972</strong>
+                    <span>CONVENTION ESTABLISHED</span>
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- ================= ABOUT ================= -->
+
+        <section id="aboutView" class="page-view">
+
+            <div class="inner-page">
+
+                <div class="page-hero">
+
+                    <span class="eyebrow">
+                        ABOUT THE PROJECT
+                    </span>
+
+                    <h1>
+                        Understanding our
+                        <em>shared heritage.</em>
+                    </h1>
+
+                    <p>
+                        A university web development project exploring
+                        UNESCO World Heritage Sites around the world.
+                    </p>
+
+                </div>
+
+
+                <div class="about-grid">
+
+                    <div class="about-main">
+
+                        <span class="eyebrow">
+                            — PURPOSE
+                        </span>
+
+                        <h2>
+                            Connecting people with
+                            places that matter.
+                        </h2>
+
+                        <p>
+                            The UNESCO Heritage Explorer is designed to
+                            provide an accessible and engaging way to
+                            discover important cultural and natural
+                            heritage sites around the world.
+                        </p>
+
+                        <p>
+                            Each place tells a different story about
+                            human civilization, architecture, history,
+                            culture, or the natural environment.
+                        </p>
+
+                    </div>
+
+
+                    <div class="about-card">
+
+                        <div class="about-icon">
+                            U
+                        </div>
+
+                        <h3>
+                            World Heritage
+                        </h3>
+
+                        <p>
+                            Places recognized for their outstanding
+                            universal value to humanity.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-features">
+
+                    <div>
+
+                        <span>01</span>
+
+                        <h3>
+                            Explore
+                        </h3>
+
+                        <p>
+                            Browse heritage places by country,
+                            category and keyword.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>02</span>
+
+                        <h3>
+                            Discover
+                        </h3>
+
+                        <p>
+                            Learn about the history and importance
+                            of each destination.
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>03</span>
+
+                        <h3>
+                            Connect
+                        </h3>
+
+                        <p>
+                            Understand how cultural and natural
+                            heritage connects us.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CONTACT ================= -->
+
+        <section id="contactView" class="page-view">
+
+            <div class="inner-page">
+
+                <div class="page-hero">
+
+                    <span class="eyebrow">
+                        CONTACT
+                    </span>
+
+                    <h1>
+                        Let's talk about
+                        <em>heritage.</em>
+                    </h1>
+
+                    <p>
+                        Have a question or suggestion?
+                        Send us a message.
+                    </p>
+
+                </div>
+
+
+                <div class="contact-grid">
+
+                    <div class="contact-info">
+
+                        <span class="eyebrow">
+                            GET IN TOUCH
+                        </span>
+
+                        <h2>
+                            We'd love to<br>
+                            hear from you.
+                        </h2>
+
+                        <p>
+                            This project is created as part of a
+                            university web development project.
+                        </p>
+
+
+                        <div class="contact-item">
+
+                            <span>
+                                EMAIL
+                            </span>
+
+                            <strong>
+                                heritage@example.com
+                            </strong>
+
+                        </div>
+
+
+                        <div class="contact-item">
+
+                            <span>
+                                PROJECT
+                            </span>
+
+                            <strong>
+                                UNESCO Heritage Explorer
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <form
+                        class="contact-form"
+                        id="contactForm"
+                    >
+
+                        <label>
+
+                            Your name
+
+                            <input
+                                type="text"
+                                required
+                                placeholder="Enter your name"
+                            >
+
+                        </label>
+
+
+                        <label>
+
+                            Email address
+
+                            <input
+                                type="email"
+                                required
+                                placeholder="Enter your email"
+                            >
+
+                        </label>
+
+
+                        <label>
+
+                            Message
+
+                            <textarea
+                                required
+                                rows="6"
+                                placeholder="Write your message..."
+                            ></textarea>
+
+                        </label>
+
+
+                        <button
+                            class="primary-btn"
+                            type="submit"
+                        >
+                            Send Message
+                            <span>→</span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= DETAIL PAGE ================= -->
+
+        <section
+            id="detailView"
+            class="page-view"
+        >
+
+            <div id="detailContainer"></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="footer-top">
+
+            <div class="footer-brand">
+
+                <div class="logo-mark">
+                    U
+                </div>
+
+                <div>
+
+                    <strong>
+                        UNESCO
+                    </strong>
+
+                    <span>
+                        HERITAGE EXPLORER
+                    </span>
+
+                </div>
+
+            </div>
+
+            <p>
+                Discover the places that tell our shared story.
+            </p>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 UNESCO Heritage Explorer
+            </span>
+
+            <span>
+                Technology University(Meiktila) second year Group 2 Project
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================= TOAST ================= -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <!-- =========================================================
+         POPULAR SECTION STYLES
+         ========================================================= -->
+
+    <style>
+
+        .popular-section {
+            position: relative;
+            overflow: hidden;
+            padding-top: 90px;
+            padding-bottom: 90px;
+        }
+
+
+        /* ================= HEADING ================= */
+
+        .popular-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 38px;
+        }
+
+        .popular-heading h2 {
+            margin: 10px 0 0;
+
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(
+                32px,
+                4vw,
+                48px
+            );
+
+            line-height: 1.08;
+            letter-spacing: -1px;
+        }
+
+        .popular-heading h2 em {
+            color: var(--blue);
+            font-style: italic;
+        }
+
+
+        /* ================= ARROWS ================= */
+
+        .popular-controls {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .popular-arrow {
+            width: 46px;
+            height: 46px;
+
+            border: 1px solid var(--border);
+            border-radius: 50%;
+
+            background: var(--surface);
+            color: var(--text);
+
+            font-size: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition:
+                background .2s ease,
+                color .2s ease,
+                transform .2s ease;
+        }
+
+        .popular-arrow:hover {
+            background: var(--blue);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+
+        /* ================= HORIZONTAL TRACK ================= */
+
+        .popular-track {
+            display: flex;
+            gap: 22px;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            padding: 4px 4px 22px;
+
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+
+            scrollbar-width: thin;
+
+            cursor: grab;
+        }
+
+        .popular-track:active {
+            cursor: grabbing;
+        }
+
+
+        /* ================= CARD ================= */
+
+        .popular-card {
+            flex: 0 0 310px;
+
+            overflow: hidden;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+            border-radius: 20px;
+
+            scroll-snap-align: start;
+
+            cursor: pointer;
+
+            transition:
+                transform .3s ease,
+                box-shadow .3s ease,
+                border-color .3s ease;
+        }
+
+        .popular-card:hover {
+            transform: translateY(-7px);
+
+            box-shadow:
+                0 18px 45px rgba(
+                    0,
+                    0,
+                    0,
+                    .12
+                );
+
+            border-color:
+                rgba(
+                    0,
+                    91,
+                    165,
+                    .3
+                );
+        }
+
+
+        /* ================= IMAGE ================= */
+
+        .popular-image {
+            position: relative;
+
+            height: 220px;
+
+            overflow: hidden;
+        }
+
+        .popular-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition:
+                transform .6s ease;
+        }
+
+        .popular-card:hover
+        .popular-image img {
+            transform: scale(1.07);
+        }
+
+
+        /* ================= NUMBER ================= */
+
+        .popular-number {
+            position: absolute;
+
+            top: 14px;
+            left: 14px;
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    0,
+                    0,
+                    0,
+                    .55
+                );
+
+            color: #fff;
+
+            backdrop-filter:
+                blur(8px);
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+
+        /* ================= CATEGORY ================= */
+
+        .popular-category {
+            position: absolute;
+
+            right: 14px;
+            top: 14px;
+
+            padding: 7px 11px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .92
+                );
+
+            color: #222;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            letter-spacing: .7px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* ================= CONTENT ================= */
+
+        .popular-card-content {
+            padding:
+                21px
+                22px
+                20px;
+        }
+
+        .popular-country {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: var(--blue);
+
+            font-size: 10px;
+            font-weight: 700;
+
+            letter-spacing: 1.2px;
+        }
+
+        .popular-card-content h3 {
+            margin: 0;
+
+            min-height: 52px;
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 21px;
+
+            line-height: 1.25;
+
+            color: var(--text);
+        }
+
+
+        /* ================= BOTTOM ================= */
+
+        .popular-card-bottom {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-top: 18px;
+
+            padding-top: 14px;
+
+            border-top:
+                1px solid
+                var(--border);
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        .popular-card-arrow {
+            color: var(--blue);
+
+            font-size: 20px;
+            font-weight: 600;
+
+            transition:
+                transform .2s ease;
+        }
+
+        .popular-card:hover
+        .popular-card-arrow {
+            transform:
+                translateX(5px);
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .popular-section {
+                padding-top: 65px;
+                padding-bottom: 65px;
+            }
+
+            .popular-heading {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                margin-bottom: 28px;
+            }
+
+            .popular-controls {
+                display: none;
+            }
+
+            .popular-track {
+                gap: 16px;
+
+                margin-right: -20px;
+
+                padding-right: 20px;
+
+                scrollbar-width: none;
+            }
+
+            .popular-track::-webkit-scrollbar {
+                display: none;
+            }
+
+            .popular-card {
+                flex-basis: 285px;
+            }
+
+            .popular-image {
+                height: 200px;
+            }
+
+        }
+
+    </style>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
